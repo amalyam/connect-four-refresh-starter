@@ -2,17 +2,17 @@ const Screen = require("./screen");
 const Cursor = require("./cursor");
 
 class ConnectFour {
-
   constructor() {
-
     this.playerTurn = "O";
 
-    this.grid = [[' ',' ',' ',' ',' ',' ',' '],
-                 [' ',' ',' ',' ',' ',' ',' '],
-                 [' ',' ',' ',' ',' ',' ',' '],
-                 [' ',' ',' ',' ',' ',' ',' '],
-                 [' ',' ',' ',' ',' ',' ',' '],
-                 [' ',' ',' ',' ',' ',' ',' ']]
+    this.grid = [
+      [" ", " ", " ", " ", " ", " ", " "],
+      [" ", " ", " ", " ", " ", " ", " "],
+      [" ", " ", " ", " ", " ", " ", " "],
+      [" ", " ", " ", " ", " ", " ", " "],
+      [" ", " ", " ", " ", " ", " ", " "],
+      [" ", " ", " ", " ", " ", " ", " "],
+    ];
 
     this.cursor = new Cursor(6, 7);
 
@@ -21,7 +21,7 @@ class ConnectFour {
     Screen.setGridlines(true);
 
     // Replace this with real commands
-    Screen.addCommand('t', 'test command (remove)', ConnectFour.testCommand);
+    Screen.addCommand("t", "test command (remove)", ConnectFour.testCommand);
 
     this.cursor.setBackgroundColor();
     Screen.render();
@@ -33,18 +33,21 @@ class ConnectFour {
   }
 
   static checkWin(grid) {
-
     // Return 'X' if player X wins
     // Return 'O' if player O wins
     // Return 'T' if the game is a tie
     // Return false if the game has not ended
 
+    let emptyGrid = grid.every((row) => row.every((space) => space === " "));
+    let fullGrid = grid.every((row) => row.every((space) => space !== " "));
   }
 
+  static horizontalCheck(grid) {}
+
   static endGame(winner) {
-    if (winner === 'O' || winner === 'X') {
+    if (winner === "O" || winner === "X") {
       Screen.setMessage(`Player ${winner} wins!`);
-    } else if (winner === 'T') {
+    } else if (winner === "T") {
       Screen.setMessage(`Tie game!`);
     } else {
       Screen.setMessage(`Game Over`);
@@ -52,7 +55,6 @@ class ConnectFour {
     Screen.render();
     Screen.quit();
   }
-
 }
 
 module.exports = ConnectFour;
