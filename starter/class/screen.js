@@ -79,7 +79,7 @@ class Screen {
         Screen.commands[key.name].execute();
       } else {
         Screen.render();
-        console.og("You can't do that right now.");
+        console.log("You can't do that right now.");
       }
     });
 

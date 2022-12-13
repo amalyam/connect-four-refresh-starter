@@ -39,6 +39,7 @@ class ConnectFour {
 
     Screen.addCommand("q", "quit the game", Screen.quit);
 
+    //do I need this here?
     this.cursor.setBackgroundColor();
 
     Screen.render();
