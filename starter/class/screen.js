@@ -101,7 +101,7 @@ class Screen {
   }
 
   static pauseCommand(key) {
-    Screen.commmands[key].active = false;
+    Screen.commands[key].active = false;
   }
 
   static setQuitMessage(quitMessage) {
