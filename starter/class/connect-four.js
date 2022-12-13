@@ -35,7 +35,7 @@ class ConnectFour {
 
     Screen.addCommand("return", "place move", ConnectFour.placeMove.bind(this));
 
-    Screen.addCommand("r", "reset the game", ConnectFour.resetGame);
+    Screen.addCommand("r", "reset the game", ConnectFour.newGame);
 
     Screen.addCommand("q", "quit the game", Screen.quit);
 
