@@ -26,13 +26,52 @@ class ConnectFour {
       "move cursor left",
       this.cursor.left.bind(this.cursor)
     );
+
     Screen.addCommand(
       "right",
       "move cursor right",
       this.cursor.right.bind(this.cursor)
     );
 
+    Screen.addCommand("return", "place move", ConnectFour.placeMove.bind(this));
+
+    Screen.addCommand("r", "reset the game", ConnectFour.resetGame);
+
+    Screen.addCommand("q", "quit the game", Screen.quit);
+
     this.cursor.setBackgroundColor();
+
+    Screen.render();
+
+    console.log(
+      `Welcome to Connect Four! Drop Xs and Os into the board until you line up 4 of the same kind.\nPlayer ${this.playerTurn}'s move.`
+    );
+    Screen.printCommands();
+  }
+
+  static placeMove() {
+    Screen.render();
+
+    if (Screen.grid[this.cursor.row][this.cursor.col] === " ") {
+      this.cursor.return(this.playerTurn);
+      if (this.playerTurn === "O") {
+        this.playerTurn = "X";
+      } else if (this.playerTurn === "X") {
+        this.playerTurn = "O";
+      }
+
+      Screen.render();
+      let winner = ConnectFour.checkWin(Screen.grid);
+      if (winner) {
+        ConnectFour.endGame(winner);
+      }
+    } else {
+      Screen.setMessage(
+        "That space is already occupied. Choose another space."
+      );
+      Screen.render();
+    }
+    Screen.setMessage(`Player ${this.playerTurn}'s move.`);
     Screen.render();
   }
 
@@ -77,7 +116,7 @@ class ConnectFour {
   }
 
   static verticalCheck(grid) {
-    for (let y = 0; y <= 3; y++) {
+    for (let y = 0; y <= 2; y++) {
       for (let x = 0; x < grid[y].length; x++) {
         if (grid[y][x] !== " ") {
           if (
@@ -124,16 +163,29 @@ class ConnectFour {
     return false;
   }
 
+  static newGame() {
+    Screen.initialize(6, 7);
+    Screen.render();
+  }
+
   static endGame(winner) {
+    Object.keys(Screen.commands).forEach((cmd) => {
+      if (!["r", "q"].includes(cmd)) {
+        Screen.pauseCommand(cmd);
+      }
+    });
+
+    let playAgainMsg =
+      "Would you like to play again? Press 'r' to reset the game or 'q' to quit.";
+
     if (winner === "O" || winner === "X") {
-      Screen.setMessage(`Player ${winner} wins!`);
+      Screen.setMessage(`Player ${winner} wins!\n${playAgainMsg}`);
     } else if (winner === "T") {
-      Screen.setMessage(`Tie game!`);
+      Screen.setMessage(`Tie game!\n${playAgainMsg}`);
     } else {
-      Screen.setMessage(`Game Over`);
+      Screen.setMessage(`Game Over\n${playAgainMsg}`);
     }
     Screen.render();
-    Screen.quit();
   }
 }
 

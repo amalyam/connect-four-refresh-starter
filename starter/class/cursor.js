@@ -10,7 +10,7 @@ class Cursor {
     this.col = 0;
 
     this.gridColor = "black";
-    this.cursorColor = "yellow";
+    this.cursorColor = "green";
   }
 
   resetBackgroundColor() {
@@ -39,22 +39,19 @@ class Cursor {
     Screen.render();
   }
 
-  up() {
+  return(playerTurn) {
     this.resetBackgroundColor();
-    if (this.row > 0) {
-      this.row--;
-    }
     this.setBackgroundColor();
-    Screen.render();
+    let openRow = Cursor.dropPiece(this.col);
+    Screen.setGrid(openRow, this.col, playerTurn);
   }
 
-  down() {
-    this.resetBackgroundColor();
-    if (this.row < this.numRows - 1) {
-      this.row++;
+  static dropPiece(col) {
+    for (let r = 5; r >= 0; r--) {
+      if (Screen.grid[r][col] === " ") {
+        return r;
+      }
     }
-    this.setBackgroundColor();
-    Screen.render();
   }
 }
 
