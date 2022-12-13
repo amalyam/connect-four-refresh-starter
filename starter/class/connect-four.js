@@ -65,15 +65,16 @@ class ConnectFour {
       let winner = ConnectFour.checkWin(Screen.grid);
       if (winner) {
         ConnectFour.endGame(winner);
+      } else {
+        Screen.setMessage(`Player ${this.playerTurn}'s move.`);
+        Screen.render();
       }
     } else {
       Screen.setMessage(
-        "That space is already occupied. Choose another space."
+        `Player ${this.playerTurn}'s move.\nThat space is already occupied. Choose another space.`
       );
       Screen.render();
     }
-    Screen.setMessage(`Player ${this.playerTurn}'s move.`);
-    Screen.render();
   }
 
   static checkWin(grid) {
@@ -166,6 +167,13 @@ class ConnectFour {
 
   static newGame() {
     Screen.initialize(6, 7);
+    Object.keys(Screen.commands).forEach((cmd) => {
+      if (!["r", "q"].includes(cmd)) {
+        Screen.activateCommand(cmd);
+      }
+    });
+    this.playerTurn = "O";
+    Screen.setMessage(`Player ${this.playerTurn}'s move.`);
     Screen.render();
   }
 

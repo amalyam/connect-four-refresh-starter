@@ -57,8 +57,10 @@ class Screen {
     console.log("");
 
     for (let cmd in Screen.commands) {
-      let description = Screen.commands[cmd].description;
-      console.log(`  ${cmd} - ${description}`);
+      if (Screen.commands[cmd].active) {
+        let description = Screen.commands[cmd].description;
+        console.log(`  ${cmd} - ${description}`);
+      }
     }
 
     console.log("");
@@ -102,6 +104,10 @@ class Screen {
 
   static pauseCommand(key) {
     Screen.commands[key].active = false;
+  }
+
+  static activateCommand(key) {
+    Screen.commands[key].active = true;
   }
 
   static setQuitMessage(quitMessage) {
