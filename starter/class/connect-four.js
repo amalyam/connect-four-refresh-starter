@@ -21,16 +21,19 @@ class ConnectFour {
     Screen.initialize(6, 7);
     Screen.setGridlines(true);
 
-    // Replace this with real commands
-    Screen.addCommand("t", "test command (remove)", ConnectFour.testCommand);
+    Screen.addCommand(
+      "left",
+      "move cursor left",
+      this.cursor.left.bind(this.cursor)
+    );
+    Screen.addCommand(
+      "right",
+      "move cursor right",
+      this.cursor.right.bind(this.cursor)
+    );
 
     this.cursor.setBackgroundColor();
     Screen.render();
-  }
-
-  // Remove this
-  static testCommand() {
-    console.log("TEST COMMAND");
   }
 
   static checkWin(grid) {
